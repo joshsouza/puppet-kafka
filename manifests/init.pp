@@ -67,12 +67,6 @@ class kafka (
     }
   }
 
-  if ! defined(Package['wget']) {
-    package {'wget':
-      ensure => present
-    }
-  }
-
   group { 'kafka':
     ensure => present
   }
@@ -114,19 +108,15 @@ class kafka (
     group  => 'kafka'
   }
 
-  exec { 'download-kafka-package':
-    command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
-    path    => ['/usr/bin', '/bin'],
-    creates => "${package_dir}/${basefilename}",
-    require => [ File[$package_dir], Package['wget'] ]
-  }
-
-  exec { 'untar-kafka-package':
-    command => "tar xfvz ${package_dir}/${basefilename} -C ${install_directory} --strip-components=1",
-    creates => "${install_directory}/LICENSE",
-    alias   => 'untar-kafka',
-    require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
-    user    => 'kafka',
-    path    => ['/bin', '/usr/bin', '/usr/sbin']
+  archive { 'kafka-package':
+    ensure           => present,
+    url              => $package_url,
+    target           => $install_directory,
+    require          => [File[$package_dir],File[$install_directory]],
+    src_target       => $package_dir,
+    checksum         => false,
+    user             => 'kafka',
+    strip_components => 1,
+    root_dir         => 'LICENSE',
   }
 }

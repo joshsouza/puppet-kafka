@@ -23,6 +23,7 @@ RSpec.configure do |c|
       on host, puppet('module install puppetlabs-stdlib --version 4.5.1'), { :acceptable_exit_codes => [0] }
       on host, puppet('module install puppetlabs-java --version 1.4.1'), { :acceptable_exit_codes => [0] }
       on host, puppet('module install deric-zookeeper --version 0.3.5'), { :acceptable_exit_codes => [0] }
+      on host, puppet('module install camptocamp-archive --version 0.8.1'), { :acceptable_exit_codes => [0] }
 
     end
   end

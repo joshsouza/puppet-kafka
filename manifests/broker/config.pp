@@ -28,7 +28,7 @@ class kafka::broker::config(
     group   => 'kafka',
     mode    => '0644',
     alias   => 'kafka-cfg',
-    require => [ Exec['untar-kafka'], File['/opt/kafka'] ],
+    require => [ Archive['kafka-package'], File['/opt/kafka'] ],
     content => template('kafka/server.properties.erb'),
     notify  => $config_notify
   }

@@ -22,8 +22,7 @@ describe 'kafka::broker' do
       it { should contain_user('kafka') }
       it { should contain_group('kafka') }
 
-      it { should contain_exec('download-kafka-package') }
-      it { should contain_exec('untar-kafka-package') }
+      it { should contain_archive('kafka-package') }
 
       it { should contain_file('/opt/kafka').with('ensure' => 'link') }
 
@@ -56,8 +55,7 @@ describe 'kafka::broker' do
       it { should contain_user('kafka') }
       it { should contain_group('kafka') }
 
-      it { should contain_exec('download-kafka-package') }
-      it { should contain_exec('untar-kafka-package') }
+      it { should contain_archive('kafka-package') }
 
       it { should contain_file('/opt/kafka').with('ensure' => 'link') }
 
