@@ -62,9 +62,7 @@ class kafka (
   }
 
   if $install_java {
-    class { 'java':
-      distribution => 'jdk'
-    }
+    include java
   }
 
   group { 'kafka':
